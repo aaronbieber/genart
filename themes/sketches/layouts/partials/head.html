@@ -1,0 +1,53 @@
+<style>
+  body {
+    background: black;
+    color: #efefef;
+  }
+
+  a {
+    color: #efefef;
+  }
+
+  ul.sketches {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  ul.sketches li {
+    float: left;
+    margin: 0 1em 1em 0;
+    border: 1px solid silver;
+  }
+
+  ul.sketches li a {
+    width: 200px;
+    height: 200px;
+    display: block;
+  }
+</style>
+
+{{ if eq .Type "sketches" }}
+<script src="/p5.min.js"></script>
+<script src="/{{ .Dir }}{{ .Params.script }}"></script>
+
+<style>
+  html, body {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  canvas {
+    border: 5px solid #555555;
+  }
+</style>
+<title>{{ .Title }}</title>
+{{ else }}
+<title>Processing Sketches</title>
+{{ end }}

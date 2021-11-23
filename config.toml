@@ -1,0 +1,16 @@
+baseURL = "http://example.org/"
+languageCode = "en-us"
+title = "My New Hugo Site"
+theme = "sketches"
+#disableKinds = ["taxonomy", "taxonomyTerm", "RSS"]
+
+# this setting should always be set to false, otherwise it will break the section navigation bar
+pluralizelisttitles = false
+
+#[params]
+  #author = "Aaron Bieber"
+
+[social]
+  twitter = "https://twitter.com/aaronbieber"
+  instagram = "https://instagram.com/aaronbieber"
+  linkedin = "https://linkedin.com/in/aaronbieber"

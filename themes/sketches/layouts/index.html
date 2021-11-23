@@ -1,0 +1,11 @@
+{{ define "main" }}
+
+<ul class="sketches">
+  {{ range .Site.RegularPages }}
+  <li>
+  <a target="_blank" href="{{ .Permalink }}"><img src="" /></a>
+  </li>
+  {{ end }}
+</ul>
+
+{{ end }}
