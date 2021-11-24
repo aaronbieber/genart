@@ -82,7 +82,7 @@ function draw() {
       for (let x=0; x<colors[y].length; x++) {
         fill(colors[y][x]);
 
-        let targetX = x * 50 + (width - 50 * 12) / 2;// + 225;
+        let targetX = x * 50 + (width - 50 * 11) / 2;// + 225;
         let targetY = (y * 50 + (height - 50 * 16) / 2) + 25;// + 125;
         let distX = targetX - positions[y][x].x;
         let distY = targetY - positions[y][x].y;
