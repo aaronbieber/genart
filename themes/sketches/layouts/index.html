@@ -1,5 +1,15 @@
 {{ define "main" }}
 
+<h1>Aaron's Processing Gallery</h1>
+
+<p>These are digital artworks created using the "Processing" environment, and run <em>directly in your own browser</em>. For that reason, some of these "sketches" (as we call them in Processing lingo) may take anywhere from a moment to several long moments to appear, depending on what device you're using to view them.</p>
+
+<p>Some of these sketches are static and others are animated. Some allow basic interactions. In most cases, you can click or tap the image to cause the sketch to regenerate, which usually varies it at random.</p>
+
+<p>For more information about the Processing environment, visit <a target="_blank" href="https://p5js.org/">https://p5js.org/</a>.</p>
+
+<p>Clicking a sketch will open the sketch in a new window or tab. Close that window or tab to return to this page.</p>
+
 <ul class="sketches">
   {{ range .Site.RegularPages }}
   <li>
