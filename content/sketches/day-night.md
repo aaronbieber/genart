@@ -1,7 +1,5 @@
 ---
 title: Day & Night
-script: day-night.js
-date: 2021-10-04
+basename: day-night
+date: 2021-10-01
 ---
-
-This is the Day & Night sketch.

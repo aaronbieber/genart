@@ -3,7 +3,10 @@
 <ul class="sketches">
   {{ range .Site.RegularPages }}
   <li>
-  <a target="_blank" href="{{ .Permalink }}"><img src="" /></a>
+    <a target="_blank" href="{{ .Permalink }}">
+      <img src="{{ .Dir }}{{ .Params.basename }}.png" />
+      <span class="title">{{ .Title }}</span>
+    </a>
   </li>
   {{ end }}
 </ul>

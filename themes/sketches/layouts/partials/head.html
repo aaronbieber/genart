@@ -29,7 +29,8 @@
 
 {{ if eq .Type "sketches" }}
 <script src="/p5.min.js"></script>
-<script src="/{{ .Dir }}{{ .Params.script }}"></script>
+<script src="/utils.js"></script>
+<script src="/{{ .Dir }}{{ .Params.basename }}.js"></script>
 
 <style>
   html, body {
