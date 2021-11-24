@@ -28,8 +28,6 @@ function paint() {
       g = floor(map(noiseVal, 0, 1, g, 255));
       b = floor(map(noiseVal, 0, 1, b, 255));
 
-      // index = 4 * ((y * d * x) * width * d + (x * d * y));
-      // pixels[index] = color(r, g, b);
       set(x, y, color(r, g, b));
     }
   }
