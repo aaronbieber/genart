@@ -3,7 +3,7 @@ var scl = 10;
 var sclTarget = 50;
 
 function preload() {
-  david = loadImage("/david.png");
+  david = loadImage(baseURL + '/david.png');
 }
 
 function setup() {

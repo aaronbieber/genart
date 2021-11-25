@@ -1,6 +1,6 @@
-baseURL = "http://example.org/"
+#baseURL = "https://aaronbieber.com/genart/"
 languageCode = "en-us"
-title = "My New Hugo Site"
+title = "Aaron's Generative Art"
 theme = "sketches"
 #disableKinds = ["taxonomy", "taxonomyTerm", "RSS"]
 

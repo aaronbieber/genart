@@ -1,7 +1,7 @@
 var img;
 
 function preload() {
-  img = loadImage('/romantic.jpg');
+  img = loadImage(baseURL + '/romantic.jpg');
 }
 
 function setup() {

@@ -14,7 +14,7 @@
   {{ range .Site.RegularPages }}
   <li>
     <a target="_blank" href="{{ .Permalink }}">
-      <img src="{{ .Dir }}{{ .Params.basename }}.png" />
+      <img src="{{ .File.Dir }}{{ .Params.basename }}.png" />
       <span class="title">{{ .Title }}</span>
     </a>
   </li>
