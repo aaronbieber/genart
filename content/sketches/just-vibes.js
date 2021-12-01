@@ -1,9 +1,13 @@
+var displacementThresh;
+
 function setup() {
   var canvas = makeCanvas();
   background(255);
   noStroke();
   colorMode(HSB);
   frameRate(30);
+
+  displacementThresh = (width > 400) ? width/3 : width/2;
 }
 
 function expMap(n, vMin, vMax, oMin, oMax) {
@@ -24,15 +28,13 @@ var dotInc = 0;
 var nval1 = 0;
 var nval2 = 100;
 var gridStep = 50;
-var displacementThresh = 500;
 function draw() {
   background(255);
   let dotAngle = dotInc % TWO_PI;
-  let radius = 100;
+  let radius = width/2-displacementThresh/3;
   let x = sin(dotAngle) * radius + width/2;
   let y = cos(dotAngle) * radius + height/2;
   let fillHue = map(dotAngle, 0, TWO_PI, 0, 360);
-  console.log(fillHue);
 
   for (let gy=gridStep/2; gy<height; gy+=gridStep) {
     for (let gx=gridStep/2; gx<width; gx+=gridStep) {
