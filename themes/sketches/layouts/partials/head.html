@@ -1,44 +1,7 @@
+<meta charset="utf-8" />
 <meta name="viewport" content="initial-scale=1" />
 <link href="{{ .Site.BaseURL }}/normalize.css" rel="stylesheet"/>
-
-<style>
-  body {
-    background: black;
-    color: #efefef;
-    font-family: Helvetica, Arial, sans-serif;
-  }
-
-  h1 {
-    text-align: center;
-    margin: 1em 0 1em 0;
-  }
-
-  p {
-    margin: 0 2em 1em 2em;
-  }
-
-  a {
-    color: #efefef;
-  }
-
-  ul.sketches {
-    list-style-type: none;
-    margin: 2em;
-    padding: 0;
-  }
-
-  ul.sketches li {
-    float: left;
-    margin: 0 1em 4em 0;
-    border: 1px solid silver;
-  }
-
-  ul.sketches li a {
-    width: 200px;
-    height: 200px;
-    display: block;
-  }
-</style>
+<link href="{{ .Site.BaseURL }}/style.css" rel="stylesheet"/>
 
 {{ if eq .Type "sketches" }}
 <script>
