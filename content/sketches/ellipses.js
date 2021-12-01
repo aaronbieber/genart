@@ -20,15 +20,10 @@ function setup() {
   frameRate(9999);
 }
 
-function mousePressed() {
-  drawing = !drawing;
-}
-
 var angleInc = 0;
 var noiseInc = 0;
 function draw() {
   if (drawing) {
-    //background(0);
     let angle1 = angleInc % TWO_PI;
     let angle2 = TWO_PI - angle1;
     let mpl = noise(noiseInc) * 5;
