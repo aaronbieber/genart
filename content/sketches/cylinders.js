@@ -10,12 +10,6 @@ function setup() {
   var canvas = makeCanvas();
   colorMode(HSB);
   hue = random(255);
-  // let bg = color(hue, 180, 32);
-  // let fg = color(
-  //   (hue + 120) % 255,
-  //   175,
-  //   90);
-
   palette = palettes[floor(random(Object.keys(palettes).length-1))];
   let fg = color(palette[0]);
   let bg = color(palette[4]);
