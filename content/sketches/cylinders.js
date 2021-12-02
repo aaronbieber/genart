@@ -35,10 +35,11 @@ function setup() {
 }
 
 function pillar(x, y, fg, bg) {
-  let r = map(y, 0, height, 400, 50);
+  let insideSize = width <= height ? width : height;
+  let r = map(y, 0, height, insideSize * 0.4, insideSize * 0.05);
   ellipseMode(CENTER);
   for (let i=y; i<height; i++) {
-    let c = lerpColor(fg, bg, map(i, y, height, 0.03, 1.0));
+    let c = mapColor(fg, bg, map(i, y, height, 0.03, 1.0));
     stroke(c);
     strokeWeight(1.5);
     line(x-r/2, i, x+r/2, i);
