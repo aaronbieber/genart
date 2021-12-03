@@ -8,8 +8,15 @@ function preload() {
 var hue;
 function setup() {
   var canvas = makeCanvas();
+  paint();
+}
+
+function mouseClicked() {
+  paint();
+}
+
+function paint() {
   colorMode(HSB);
-  hue = random(255);
   palette = palettes[floor(random(Object.keys(palettes).length-1))];
   let fg = color(palette[0]);
   let bg = color(palette[4]);
