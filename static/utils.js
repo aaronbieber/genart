@@ -16,3 +16,11 @@ function mapColor(c1, c2, pct) {
     map(pct, 0, 1, green(c1), green(c2)),
     map(pct, 0, 1, blue(c1), blue(c2)));
 }
+
+function withBrightness(c, b) {
+  colorMode(HSB);
+  return color(
+    hue(c),
+    saturation(c),
+    b);
+}
