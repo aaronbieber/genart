@@ -1,17 +1,18 @@
 var palettes;
 var palette;
+
 function preload() {
   palettes = loadJSON(baseURL + '/1000.json');
 }
 
 function setup() {
   var canvas = makeCanvas();
-
-  palette = palettes[floor(random(Object.keys(palettes).length-1))];
-  background(withBrightness(color(palette[0]), 24));
-
   blendMode(SCREEN);
   paint();
+}
+
+function mouseClicked() {
+  loadWhile(paint);
 }
 
 function leaf(x, y, r) {
@@ -23,6 +24,11 @@ function leaf(x, y, r) {
 }
 
 function paint() {
+  palette = palettes[floor(random(Object.keys(palettes).length-1))];
+  blendMode(BLEND);
+  background(withBrightness(color(palette[0]), 24));
+  blendMode(SCREEN);
+
   for (let i=0; i<5; i++) {
     let xMin = width/8;
     let xMax = width-xMin;
@@ -33,17 +39,21 @@ function paint() {
 }
 
 function drawCluster(x, y, palette) {
-  let s = width <= height ? width : height;
+  let s = shortEdge();
+  let l = longEdge();
   for (let i=0; i<s; i++) {
     let c = color(palette[floor(random(palette.length-1))]);
     noStroke();
     fill(c);
+    let leafX = randomGaussian(x, l/6);
+    let leafY = randomGaussian(y, l/6);
+    let maxR = map(dist(leafX, leafY, x, y), 0, s/2, 50, 5, true);
     let r = random(10,30);
 
     push();
-    translate(randomGaussian(x, s/8), randomGaussian(y, s/8));
+    translate(leafX, leafY);
     rotate(radians(random(180)));
-    leaf(0, 0, r);
+    leaf(0, 0, maxR);
     pop();
   }
 }

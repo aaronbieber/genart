@@ -24,3 +24,25 @@ function withBrightness(c, b) {
     saturation(c),
     b);
 }
+
+function longEdge() {
+  return width >= height ? width : height;
+}
+
+function shortEdge() {
+  return width <= height ? width : height;
+}
+
+function loadWhile(callback) {
+  startLoading();
+  setTimeout(callback, 250);
+  setTimeout(endLoading, 500);
+}
+
+function startLoading() {
+  document.getElementById('loading').style.display = 'block';
+}
+
+function endLoading() {
+  document.getElementById('loading').style.display = 'none';
+}
