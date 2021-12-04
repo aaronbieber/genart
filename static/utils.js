@@ -35,8 +35,10 @@ function shortEdge() {
 
 function loadWhile(callback) {
   startLoading();
-  setTimeout(callback, 250);
-  setTimeout(endLoading, 500);
+  setTimeout(() => {
+    callback();
+    endLoading();
+  }, 100);
 }
 
 function startLoading() {
