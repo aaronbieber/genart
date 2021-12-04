@@ -33,14 +33,15 @@ function paint() {
 }
 
 function drawCluster(x, y, palette) {
-  for (let i=0; i<1000; i++) {
+  let s = width <= height ? width : height;
+  for (let i=0; i<s; i++) {
     let c = color(palette[floor(random(palette.length-1))]);
     noStroke();
     fill(c);
     let r = random(10,30);
 
     push();
-    translate(randomGaussian(x, width/8), randomGaussian(y, height/8));
+    translate(randomGaussian(x, s/8), randomGaussian(y, s/8));
     rotate(radians(random(180)));
     leaf(0, 0, r);
     pop();
