@@ -48,3 +48,7 @@ function startLoading() {
 function endLoading() {
   document.getElementById('loading').style.display = 'none';
 }
+
+function randomElement(arr) {
+  return arr[floor(random(Object.keys(arr).length-1))];
+}
