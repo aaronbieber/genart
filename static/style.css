@@ -45,3 +45,7 @@ ul.sketches li a {
   color: white;
   padding: 2em;
 }
+
+span.title img {
+  margin-bottom: -2px;
+}

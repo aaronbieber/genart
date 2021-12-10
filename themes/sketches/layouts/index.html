@@ -10,12 +10,19 @@
 
 <p>Clicking a sketch will open the sketch in a new window or tab. Close that window or tab to return to this page.</p>
 
+<p>A warning symbol (<img src="{{ .Site.BaseURL }}/warning.png" width="16" height="16" alt="Warning: slow" />) is shown next to sketches that can take a longer time to generate, so you may not want to load these on your mobile phone unless you have a lot of patience.</p>
+
 <ul class="sketches">
   {{ range .Site.RegularPages }}
   <li>
     <a target="_blank" href="{{ .Permalink }}">
       <img src="{{ .File.Dir }}{{ .Params.basename }}.png" />
-      <span class="title">{{ .Title }}</span>
+      <span class="title">
+        {{ .Title }}
+        {{if .Params.slow}}
+        <img src="{{ .Site.BaseURL }}/warning.png" width="16" height="16" alt="Warning: slow" />
+        {{end}}
+      </span>
     </a>
   </li>
   {{ end }}
