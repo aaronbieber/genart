@@ -25,6 +25,17 @@ function withBrightness(c, b) {
     b);
 }
 
+/* Return the given color `c' with the alpha value set to `a', which
+ * should be an integer from 0-255. */
+function withAlpha(c, a) {
+  colorMode(RGB);
+  return color(
+    red(c),
+    green(c),
+    blue(c),
+    a);
+}
+
 function longEdge() {
   return width >= height ? width : height;
 }
