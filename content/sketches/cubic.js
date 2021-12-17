@@ -16,6 +16,7 @@ const scale = [
 function setup() {
   let canvas = makeCanvas();
   stroke(255);
+  strokeCap(SQUARE);
 
   points[0] = createVector(-0.5, -0.5, -0.5);
   points[1] = createVector(0.5, -0.5, -0.5);
@@ -27,6 +28,8 @@ function setup() {
   points[7] = createVector(-0.5, 0.5, 0.5);
 
   angle = QUARTER_PI;
+  angle = 2.871510531314999;
+  noLoop();
 }
 
 var angleInc = 0;
@@ -92,24 +95,84 @@ function draw() {
     if (!(normalLeft.z < 0 && normalRight.z < 0)) connect(i, i + 4, projected);
   }
 
+  // Draw the lines
+  strokeWeight(1);
+  stroke(255);
+  for (const seg of lines) {
+    line(seg[0].x, seg[0].y, seg[1].x, seg[1].y);
+  }
+
+  noStroke();
+  fill(255, 0, 0);
+  rectMode(CORNERS);
+  let bandHeight = 20;
+  for (y=-height/2; y<height/2; y+=bandHeight) {
+    let pixRect = {
+      top:    [ createVector(-width/2, y), createVector(width/2, y) ],
+      bottom: [ createVector(-width/2, y+bandHeight), createVector(width/2, y+bandHeight) ]
+    };
+
+    for (const l of lines) {
+      let isects = [];
+      let itop = intersection(l[0], l[1], pixRect.top[0], pixRect.top[1]);
+      if (itop !== undefined) isects.push(itop);
+      let ibottom = intersection(l[0], l[1], pixRect.bottom[0], pixRect.bottom[1]);
+      if (ibottom !== undefined) isects.push(ibottom);
+
+      // The line ends within the band.
+      if (isects.length == 1) {
+        if (l[0].y > y && l[0].y < y+bandHeight) {
+          isects.push(l[0]);
+        } else {
+          isects.push(l[1]);
+        }
+      }
+
+      if (isects.length == 2) {
+        isects.sort((a, b) => { return a.x < b.x });
+        rect(isects[0].x, pixRect.top[0].y, isects[1].x, pixRect.bottom[0].y);
+      }
+    }
+
+  }
+
+  // strokeWeight(10);
+  // for (let y=-height/2; y<=height/2; y+=10) {
+  //   let segment = [createVector(-500, y), createVector(500, y)];
+
+  //   // Calculate intersections
+  //   let intersections = [];
+  //   for (let i=0; i<lines.length; i++) {
+  //     let int = intersection(segment[0], segment[1], lines[i][0], lines[i][1])
+  //     if (int !== undefined) {
+  //       intersections.push(int.x);
+  //       // strokeWeight(10);
+  //       // point(int.x, int.y);
+  //     }
+  //   }
+  //   intersections.sort((a,b) => a > b);
+
+  //   if (intersections.length) {
+  //     for (let seg=0; seg<intersections.length; seg++) {
+  //       if (seg == 0) {
+  //         line(segment[0].x, y, intersections[seg] - 10, y);
+  //       } else {
+  //         line(intersections[seg-1] + 10, y, intersections[seg] - 10, y);
+  //       }
+  //     }
+  //     line(intersections[intersections.length-1] + 10, y, segment[1].x, y);
+  //   } else {
+  //     line(segment[0].x, segment[0].y, segment[1].x, segment[1].y);
+  //   }
+  // }
+
+  // Advance the rotation
   angle = HALF_PI * sin(angleInc - (0.75 * PI)) + 0.75 * PI;
   angleInc += 0.02;
+}
 
-  let segment = [createVector(-500, 0), createVector(500, 0)];
-  strokeWeight(1);
-  line(segment[0].x, segment[0].y, segment[1].x, segment[1].y);
-  stroke(255);
-  console.log(lines);
-  for (let i=0; i<lines.length; i++) {
-    strokeWeight(1);
-    line(lines[i][0].x, lines[i][0].y, lines[i][1].x, lines[i][1].y);
-    let int = intersection(segment[0], segment[1], lines[i][0], lines[i][1])
-    console.log(int);
-    if (int !== undefined) {
-      strokeWeight(10);
-      point(int.x, int.y);
-    }
-  }
+function mouseClicked() {
+  noLoop();
 }
 
 function normal3(v0, v1, v2) {
@@ -209,6 +272,20 @@ function matmul(a, b) {
 //   y: number;
 // }
 
+function closest(origin, points) {
+  let dist = width*2;
+  let ret;
+  for (const p of points) {
+    let d = p5.Vector.dist(origin, p);
+    if (d < dist) {
+      dist = d;
+      ret = p;
+    }
+  }
+
+  return ret.copy();
+}
+
 function intersection(from1, to1, from2, to2) {
   const dX = to1.x - from1.x;
   const dY = to1.y - from1.y;
@@ -222,8 +299,12 @@ function intersection(from1, to1, from2, to2) {
   // check if there is an intersection
   if (!(0 <= lambda && lambda <= 1) || !(0 <= gamma && gamma <= 1)) return undefined;
 
-  return {
-    x: from1.x + lambda * dX,
-    y: from1.y + lambda * dY,
-  };
+  // return {
+  //   x: from1.x + lambda * dX,
+  //   y: from1.y + lambda * dY,
+  // };
+  return createVector(
+    from1.x + lambda * dX,
+    from1.y + lambda * dY
+  );
 }
