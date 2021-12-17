@@ -28,8 +28,6 @@ function setup() {
   points[7] = createVector(-0.5, 0.5, 0.5);
 
   angle = QUARTER_PI;
-  angle = 2.871510531314999;
-  noLoop();
 }
 
 var angleInc = 0;
@@ -95,18 +93,18 @@ function draw() {
     if (!(normalLeft.z < 0 && normalRight.z < 0)) connect(i, i + 4, projected);
   }
 
-  // Draw the lines
-  strokeWeight(1);
-  stroke(255);
-  for (const seg of lines) {
-    line(seg[0].x, seg[0].y, seg[1].x, seg[1].y);
-  }
+  // // Draw the lines
+  // strokeWeight(1);
+  // stroke(255);
+  // for (const seg of lines) {
+  //   line(seg[0].x, seg[0].y, seg[1].x, seg[1].y);
+  // }
 
   noStroke();
-  fill(255, 0, 0);
   rectMode(CORNERS);
   let bandHeight = 20;
-  for (y=-height/2; y<height/2; y+=bandHeight) {
+  let testy = 12;
+  for (let y=-height/2; y<height/2; y+=bandHeight+5) {
     let pixRect = {
       top:    [ createVector(-width/2, y), createVector(width/2, y) ],
       bottom: [ createVector(-width/2, y+bandHeight), createVector(width/2, y+bandHeight) ]
@@ -119,52 +117,38 @@ function draw() {
       let ibottom = intersection(l[0], l[1], pixRect.bottom[0], pixRect.bottom[1]);
       if (ibottom !== undefined) isects.push(ibottom);
 
-      // The line ends within the band.
-      if (isects.length == 1) {
-        if (l[0].y > y && l[0].y < y+bandHeight) {
-          isects.push(l[0]);
-        } else {
-          isects.push(l[1]);
-        }
+      // One end of the line ends within the band.
+      if (l[0].y > y && l[0].y < y+bandHeight) {
+        isects.push(l[0].copy());
       }
 
-      if (isects.length == 2) {
+      // The other end of the line ends within the band.
+      if (l[1].y > y && l[1].y < y+bandHeight) {
+        isects.push(l[1].copy());
+      }
+
+      // There are two "pixel" endpoints, we can draw it.
+      if (isects.length === 2) {
+        // Draw from "left" to "right"
         isects.sort((a, b) => { return a.x < b.x });
+
+        // Set minimum width
+        let w = isects[0].x < isects[1].x ? isects[1].x - isects[0].x : isects[0].x - isects[1].x;
+        if (w < bandHeight) {
+          let d = (bandHeight - w) / 2;
+          if (isects[0].x < isects[1].x) {
+            isects[0].x -= d;
+            isects[1].x += d;
+          } else {
+            isects[0].x += d;
+            isects[1].x -= d;
+          }
+        }
+
         rect(isects[0].x, pixRect.top[0].y, isects[1].x, pixRect.bottom[0].y);
       }
     }
-
   }
-
-  // strokeWeight(10);
-  // for (let y=-height/2; y<=height/2; y+=10) {
-  //   let segment = [createVector(-500, y), createVector(500, y)];
-
-  //   // Calculate intersections
-  //   let intersections = [];
-  //   for (let i=0; i<lines.length; i++) {
-  //     let int = intersection(segment[0], segment[1], lines[i][0], lines[i][1])
-  //     if (int !== undefined) {
-  //       intersections.push(int.x);
-  //       // strokeWeight(10);
-  //       // point(int.x, int.y);
-  //     }
-  //   }
-  //   intersections.sort((a,b) => a > b);
-
-  //   if (intersections.length) {
-  //     for (let seg=0; seg<intersections.length; seg++) {
-  //       if (seg == 0) {
-  //         line(segment[0].x, y, intersections[seg] - 10, y);
-  //       } else {
-  //         line(intersections[seg-1] + 10, y, intersections[seg] - 10, y);
-  //       }
-  //     }
-  //     line(intersections[intersections.length-1] + 10, y, segment[1].x, y);
-  //   } else {
-  //     line(segment[0].x, segment[0].y, segment[1].x, segment[1].y);
-  //   }
-  // }
 
   // Advance the rotation
   angle = HALF_PI * sin(angleInc - (0.75 * PI)) + 0.75 * PI;
@@ -183,9 +167,6 @@ function connect(i, j, points) {
   const a = points[i];
   const b = points[j];
   lines.push([a, b]);
-  // strokeWeight(1);
-  // stroke(255);
-  // line(a.x, a.y, b.x, b.y);
 }
 
 // Daniel Shiffman
@@ -198,7 +179,6 @@ function connect(i, j, points) {
 
 // Matrix Multiplication
 // https://youtu.be/tzsgS19RRc8
-
 function vecToMatrix(v) {
   let m = [];
   for (let i = 0; i < 3; i++) {
@@ -271,7 +251,6 @@ function matmul(a, b) {
 //   x: number;
 //   y: number;
 // }
-
 function closest(origin, points) {
   let dist = width*2;
   let ret;
@@ -299,10 +278,6 @@ function intersection(from1, to1, from2, to2) {
   // check if there is an intersection
   if (!(0 <= lambda && lambda <= 1) || !(0 <= gamma && gamma <= 1)) return undefined;
 
-  // return {
-  //   x: from1.x + lambda * dX,
-  //   y: from1.y + lambda * dY,
-  // };
   return createVector(
     from1.x + lambda * dX,
     from1.y + lambda * dY
