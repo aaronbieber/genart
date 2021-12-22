@@ -13,9 +13,15 @@ const scale = [
   [0, 0, 400]
 ]
 
+var palettes, palette;
+
+function preload() {
+  palettes = loadJSON(baseURL + '/1000.json');
+}
+
 function setup() {
   let canvas = makeCanvas();
-  stroke(255);
+  palette = randomElement(palettes);
   strokeCap(SQUARE);
 
   points[0] = createVector(-0.5, -0.5, -0.5);
@@ -32,21 +38,23 @@ function setup() {
 
 var angleInc = 0;
 function draw() {
-  background(0);
+  background(palette[0]);
   translate(width / 2, height / 2);
   lines = [];
 
-  const rotationZ = [
-    [cos(angle), -sin(angle), 0],
-    [sin(angle), cos(angle), 0],
-    [0, 0, 1]
-  ];
+  function rotationZ(a) {
+    return [
+      [cos(a), -sin(a), 0],
+      [sin(a), cos(a), 0],
+      [0, 0, 1]];
+  }
 
-  const rotationX = [
-    [1, 0, 0],
-    [0, cos(angle), -sin(angle)],
-    [0, sin(angle), cos(angle)]
-  ];
+  function rotationX(a) {
+    return [
+      [1, 0, 0],
+      [0, cos(a), -sin(a)],
+      [0, sin(a), cos(a)]];
+  }
 
   const rotationY = [
     [cos(angle), 0, sin(angle)],
@@ -93,70 +101,93 @@ function draw() {
     if (!(normalLeft.z < 0 && normalRight.z < 0)) connect(i, i + 4, projected);
   }
 
-  // // Draw the lines
+  // Draw the lines
   // strokeWeight(1);
   // stroke(255);
   // for (const seg of lines) {
   //   line(seg[0].x, seg[0].y, seg[1].x, seg[1].y);
   // }
 
-  noStroke();
   rectMode(CORNERS);
-  let bandHeight = 20;
-  let testy = 12;
-  for (let y=-height/2; y<height/2; y+=bandHeight+5) {
-    let pixRect = {
-      top:    [ createVector(-width/2, y), createVector(width/2, y) ],
-      bottom: [ createVector(-width/2, y+bandHeight), createVector(width/2, y+bandHeight) ]
-    };
+  noStroke();
+  fill(palette[1]);
+  let bandHeight = 15;
 
-    for (const l of lines) {
-      let isects = [];
-      let itop = intersection(l[0], l[1], pixRect.top[0], pixRect.top[1]);
-      if (itop !== undefined) isects.push(itop);
-      let ibottom = intersection(l[0], l[1], pixRect.bottom[0], pixRect.bottom[1]);
-      if (ibottom !== undefined) isects.push(ibottom);
-
-      // One end of the line ends within the band.
-      if (l[0].y > y && l[0].y < y+bandHeight) {
-        isects.push(l[0].copy());
+  // Per-pixel drawing method
+  noStroke();
+  noFill();
+  rectMode(CORNERS);
+  for (let y=-height/2; y<height/2; y+=bandHeight) {
+    for (let x=-width/2; x<width/2; x+=bandHeight) {
+      if (touchesAnyLine(x, y, x+bandHeight, y+bandHeight)) {
+        fill(palette[1]);
+      } else {
+        noFill();
       }
-
-      // The other end of the line ends within the band.
-      if (l[1].y > y && l[1].y < y+bandHeight) {
-        isects.push(l[1].copy());
-      }
-
-      // There are two "pixel" endpoints, we can draw it.
-      if (isects.length === 2) {
-        // Draw from "left" to "right"
-        isects.sort((a, b) => { return a.x < b.x });
-
-        // Set minimum width
-        let w = isects[0].x < isects[1].x ? isects[1].x - isects[0].x : isects[0].x - isects[1].x;
-        if (w < bandHeight) {
-          let d = (bandHeight - w) / 2;
-          if (isects[0].x < isects[1].x) {
-            isects[0].x -= d;
-            isects[1].x += d;
-          } else {
-            isects[0].x += d;
-            isects[1].x -= d;
-          }
-        }
-
-        rect(isects[0].x, pixRect.top[0].y, isects[1].x, pixRect.bottom[0].y);
-      }
+      rect(x, y, x+bandHeight, y+bandHeight);
     }
   }
+
+  // for (let y=-height/2; y<height/2; y+=bandHeight) {
+  //   let pixRect = {
+  //     top:    [ createVector(-width/2, y), createVector(width/2, y) ],
+  //     bottom: [ createVector(-width/2, y+bandHeight), createVector(width/2, y+bandHeight) ]
+  //   };
+
+  //   for (const l of lines) {
+  //     // Compute intersections between each line segment of the cube
+  //     // and the edges of the band.
+  //     let isects = [
+  //       intersection(l[0], l[1], pixRect.top[0], pixRect.top[1]),
+  //       intersection(l[0], l[1], pixRect.bottom[0], pixRect.bottom[1])
+  //     ].filter(a => a !== undefined);
+
+  //     // If end(s) terminate within the band
+  //     for (s of l) {
+  //       if (s.y > y && s.y < y+bandHeight) {
+  //         isects.push(s.copy());
+  //       }
+  //     }
+
+  //     // There are two "pixel" endpoints, so we can draw a pixel rectangle
+  //     if (isects.length === 2) {
+  //       // Draw from "left" to "right"
+  //       isects.sort((a, b) => a.x - b.x );
+
+  //       // Set minimum width
+  //       let w = isects[1].x - isects[0].x;
+  //       if (w < bandHeight) {
+  //         let d = (bandHeight - w) / 2;
+  //         isects[0].x -= d;
+  //         isects[1].x += d;
+  //       }
+
+  //       rect(isects[0].x, pixRect.top[0].y, isects[1].x, pixRect.bottom[0].y);
+  //     }
+  //   }
+  // }
 
   // Advance the rotation
   angle = HALF_PI * sin(angleInc - (0.75 * PI)) + 0.75 * PI;
   angleInc += 0.02;
 }
 
-function mouseClicked() {
-  noLoop();
+// Provide box in CORNERS format (two opposite corners)
+function touchesAnyLine(x1, y1, x2, y2) {
+  const sides = [
+    [createVector(x1, y1), createVector(x2, y1)],
+    [createVector(x2, y1), createVector(x2, y2)],
+    [createVector(x2, y2), createVector(x1, y2)],
+    [createVector(x1, y2), createVector(x1, y1)]
+  ];
+  for (const l of lines) {
+    for (const s of sides) {
+      if (intersection(l[0], l[1], s[0], s[1])) {
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
 function normal3(v0, v1, v2) {
