@@ -38,7 +38,8 @@ function setup() {
 
 var angleInc = 0;
 function draw() {
-  background(palette[0]);
+  // background(palette[0]);
+
   translate(width / 2, height / 2);
   lines = [];
 
@@ -118,13 +119,14 @@ function draw() {
   noFill();
   rectMode(CORNERS);
   for (let y=-height/2; y<height/2; y+=bandHeight) {
+    fill(mapColor(palette[0], palette[2], map(y, -height/2, height/2, 0, 1)));
+    rect(-width/2, y, width/2, y+bandHeight);
+
     for (let x=-width/2; x<width/2; x+=bandHeight) {
       if (touchesAnyLine(x, y, x+bandHeight, y+bandHeight)) {
-        fill(palette[1]);
-      } else {
-        noFill();
+        fill(palette[4]);
+        rect(x, y, x+bandHeight, y+bandHeight);
       }
-      rect(x, y, x+bandHeight, y+bandHeight);
     }
   }
 
