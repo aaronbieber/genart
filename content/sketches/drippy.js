@@ -29,20 +29,6 @@ function paint() {
   drip(0, seg*2, p[1]);
 }
 
-function triad(primary) {
-  let result = new Array(2);
-  result[0] = color(
-    (hue(primary) + 83) % 255,
-    saturation(primary),
-    brightness(primary));
-  result[1] = color(
-    (hue(primary) + 166) % 255,
-    saturation(primary),
-    brightness(primary));
-
-  return result;
-}
-
 function vertexArc(x, y, r, start, end) {
   if (start < end) {
     for (let a=start; a<=end; a+=radians(5)) {

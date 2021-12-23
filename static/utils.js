@@ -36,6 +36,33 @@ function withAlpha(c, a) {
     a);
 }
 
+/* Given a `primary' color, return an array of the color's two
+ * triads. */
+function triad(primary) {
+  colorMode(HSB);
+  let result = new Array(2);
+  result[0] = color(
+    (hue(primary) + 83) % 255,
+    saturation(primary),
+    brightness(primary));
+  result[1] = color(
+    (hue(primary) + 166) % 255,
+    saturation(primary),
+    brightness(primary));
+
+  return result;
+}
+
+/* Given a `primary' color, return the color's complement (opposite).
+ */
+function complementary(primary) {
+  colorMode(HSB);
+  return color(
+    (hue(primary) + 180) % 255,
+    saturation(primary),
+    brightness(primary));
+}
+
 function longEdge() {
   return width >= height ? width : height;
 }
