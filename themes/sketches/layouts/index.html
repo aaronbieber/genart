@@ -14,14 +14,17 @@
 
 <ul class="sketches">
   {{ range .Site.RegularPages }}
+  {{ $image := printf "%s/%s.png" .File.Dir .Params.basename }}
   <li>
     <a target="_blank" href="{{ .Permalink }}">
-      <img src="{{ .File.Dir }}{{ .Params.basename }}.png" />
+      {{ if fileExists $image }}
+        <img src="{{ .File.Dir }}{{ .Params.basename }}.png" />
+      {{ end }}
       <span class="title">
         {{ .Title }}
-        {{if .Params.slow}}
+        {{ if .Params.slow }}
         <img src="{{ .Site.BaseURL }}/warning.png" width="16" height="16" alt="Warning: slow" />
-        {{end}}
+        {{ end }}
       </span>
     </a>
   </li>
