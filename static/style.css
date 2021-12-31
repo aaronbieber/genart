@@ -2,6 +2,11 @@ html, body {
   height: 100%;
 }
 
+main {
+  display: flex;
+  align-items: center;
+}
+
 canvas {
   margin-top: 50px;
   border: 5px solid #555555;
@@ -14,6 +19,10 @@ body {
   background: black;
   color: #efefef;
   font-family: Helvetica, Arial, sans-serif;
+}
+
+#p5_loading {
+  top: 50%;
 }
 
 h1 {
