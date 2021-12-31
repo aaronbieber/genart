@@ -1,4 +1,16 @@
+html, body {
+  height: 100%;
+}
+
+canvas {
+  margin-top: 50px;
+  border: 5px solid #555555;
+}
+
 body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
   background: black;
   color: #efefef;
   font-family: Helvetica, Arial, sans-serif;
@@ -48,4 +60,29 @@ ul.sketches li a {
 
 span.title img {
   margin-bottom: -2px;
+}
+
+#titlebar {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  padding-top: 1em;
+}
+
+#titlebar .back {
+  text-decoration: none;
+  margin-left: 1em;
+  border: 1px solid silver;
+  padding: 8px 10px;
+  border-radius: 3px;
+}
+
+#titlebar .title {
+  margin-left: 10px;
+}
+
+#titlebar .github {
+  float: right;
+  margin-right: 1em;
 }

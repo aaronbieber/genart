@@ -16,7 +16,7 @@
   {{ range .Site.RegularPages }}
   {{ $image := printf "%s/%s.png" .File.Dir .Params.basename }}
   <li>
-    <a target="_blank" href="{{ .Permalink }}">
+    <a href="{{ .Permalink }}">
       {{ if fileExists $image }}
         <img src="{{ .File.Dir }}{{ .Params.basename }}.png" />
       {{ end }}

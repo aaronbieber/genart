@@ -1,3 +1,10 @@
 {{ define "main" }}
+<div id="titlebar">
+  <a class="back" href="{{ .Site.BaseURL }}">&#129092;</a>
+  <span class="title">{{ .Title }}</span>
+  <span class="github">
+    <a target="_blank" href="https://github.com/aaronbieber/genart/blob/main/content/sketches/{{ .Params.basename }}.js">Github</a>
+  </span>
+</div>
 <div id="loading">PAINTING...</div>
 {{ end }}

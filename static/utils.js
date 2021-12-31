@@ -1,6 +1,6 @@
 function makeCanvas(maxWidth = 1000, maxHeight = 1000) {
   var w = windowWidth - 30;
-  var h = windowHeight - 30;
+  var h = windowHeight - 80;
 
   if (w > maxWidth) w = maxWidth;
   if (h > maxHeight) h = maxHeight;
