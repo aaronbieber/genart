@@ -60,7 +60,6 @@ function setup() {
         stroke(mapColor(palette[2], palette[3], map(s, steps/2, steps, 0, 1)));
       }
       strokeWeight(2);
-      // strokeWeight(map(s, 0, steps, 4, 0.1));
 
       let column_index = int(x1 / resolution);
       let row_index = int(y1 / resolution);
@@ -77,7 +76,6 @@ function setup() {
 
       line(x1 - width/2, y1 - height/2,
            x2 - width/2, y2 - height/2);
-           // points[x][y].y - height/2);
       x1 = x2;
       y1 = y2;
     }
@@ -91,10 +89,6 @@ function setup() {
     }
   }
 }
-
-
-
-
 
 // Adapted from https://github.com/jdobres/circle-packing/
 // Modified to remove all drawing, to synchronously pack circles until
