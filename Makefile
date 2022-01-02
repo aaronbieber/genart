@@ -11,7 +11,7 @@ build:
 deploy: build
 	rsync $(OPTS) $(EXCLUDE) $(SRC) $(DEST)
 
-timestamp != date +%Y%m%d%H%M
+timestamp != date +%Y-%m-%d_%H%M
 sketch:
 	echo "---\ntitle: Sketch $(timestamp)\nbasename: sketch$(timestamp)\ndate: `date +%Y-%m-%d`\n---" \
 		> content/sketches/sketch$(timestamp).md
