@@ -24,7 +24,7 @@ function setup() {
 
   resolution = int(width * 0.01);
   num_columns = int(width * 2 / resolution);
-  num_rows = int(height * 2) / resolution;
+  num_rows = int(height * 2 / resolution);
 
   grid = [];
   for (let x=0; x<num_columns; x++) {
