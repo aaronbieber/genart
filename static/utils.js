@@ -91,6 +91,36 @@ function randomElement(arr) {
   return arr[floor(random(Object.keys(arr).length-1))];
 }
 
+class Line {
+  constructor(p1, p2) {
+    this.p1 = p1;
+    this.p2 = p2;
+  }
+
+  intersects(from2, to2) {
+    const dX = this.p2.x - this.p1.x;
+    const dY = this.p2.y - this.p1.y;
+
+    const determinant = dX * (to2.y - from2.y) - (to2.x - from2.x) * dY;
+    if (determinant === 0) return undefined; // parallel lines
+
+    const lambda = ((to2.y - from2.y) * (to2.x - this.p1.x) + (from2.x - to2.x) * (to2.y - this.p1.y)) / determinant;
+    const gamma = ((this.p1.y - this.p2.y) * (to2.x - this.p1.x) + dX * (to2.y - this.p1.y)) / determinant;
+
+    // check if there is an intersection
+    if (!(0 <= lambda && lambda <= 1) || !(0 <= gamma && gamma <= 1)) return undefined;
+
+    return createVector(
+      this.p1.x + lambda * dX,
+      this.p1.y + lambda * dY
+    );
+  }
+
+  paint() {
+    line(this.p1.x, this.p1.y, this.p2.x, this.p2.y);
+  }
+}
+
 /**
  * Author: Oleksii Trekhleb
  * From https://github.com/trekhleb/javascript-algorithms/blob/master/src/algorithms/statistics/weighted-random/weightedRandom.js
