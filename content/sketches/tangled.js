@@ -1,8 +1,4 @@
-var left_x,
-    right_x,
-    top_y,
-    bottom_y,
-    resolution,
+var resolution,
     num_columns,
     num_rows,
     grid,
@@ -18,11 +14,6 @@ function setup() {
   var canvas = makeCanvas();
   palette = randomElement(palettes);
   background(palette[0]);
-
-  left_x = int(width - width/2);
-  right_x = int(width + width/2);
-  top_y = int(height - height/2);
-  bottom_y = int(height + height/2);
 
   let point_resolution = int(width * 0.005);
   let points_x = int(width * 2 / point_resolution);
