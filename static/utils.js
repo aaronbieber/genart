@@ -116,6 +116,16 @@ class Line {
     );
   }
 
+  slopeIntercept() {
+    let a = (this.p1.y - this.p2.y) / (this.p1.x - this.p2.x);
+    let b = this.p1.y - a * this.p1.x;
+
+    return {
+      slope: a,
+      yint: b
+    };
+  }
+
   paint() {
     line(this.p1.x, this.p1.y, this.p2.x, this.p2.y);
   }
@@ -174,4 +184,18 @@ function weightedRandom(items, weights) {
       };
     }
   }
+}
+
+// Lifted from https://openprocessing.org/sketch/757837
+// Given two points on a line, return the slope and y-intercept
+function slopeIntercept(x1, y1, x2, y2) {
+  var a, b;
+
+  a = (y1 - y2) / (x1 - x2);
+  b = y1 - a * x1;
+
+  return {
+    slope: a,
+    yint: b
+  };
 }
