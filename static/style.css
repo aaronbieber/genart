@@ -40,12 +40,14 @@ a {
 
 ul.sketches {
   list-style-type: none;
-  margin: 2em;
+  text-align: center;
+  margin: 2em auto;
   padding: 0;
 }
 
 ul.sketches li {
-  float: left;
+  text-align: left;
+  display: inline-block;
   margin: 0 1em 4em 0;
   border: 1px solid silver;
 }
