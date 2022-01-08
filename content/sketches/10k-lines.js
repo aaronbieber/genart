@@ -71,14 +71,3 @@ function intersection(from1, to1, from2, to2) {
     from1.y + lambda * dY
   );
 }
-
-class Line {
-  constructor(p1, p2) {
-    this.p1 = p1;
-    this.p2 = p2;
-  }
-
-  paint() {
-    line(this.p1.x, this.p1.y, this.p2.x, this.p2.y);
-  }
-}
