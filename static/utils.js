@@ -199,3 +199,61 @@ function slopeIntercept(x1, y1, x2, y2) {
     yint: b
   };
 }
+
+class Hull {
+  constructor(points) {
+    this.points = points;
+  }
+
+  getExtrema() {
+    let result = [];
+    // Leftmost point is automatically a member.
+    this.points.sort((a, b) => a.x - b.x);
+    result.push(this.points[0]);
+
+    let l = 0;
+    let limit = 0;
+    while (true) {
+      let q = (l + 1) % this.points.length;
+
+      for (let i=0; i<this.points.length; i++) {
+        if (i == l) continue;
+
+        let d = this.direction(this.points[l], this.points[i], this.points[q]);
+        if (d < 0 || (d == 0 && p5.Vector.dist(this.points[l], this.points[i]) > p5.Vector.dist(this.points[l], this.points[q]))) {
+          q = i;
+        }
+      }
+
+      l = q;
+      if (l == 0) break;
+      result.push(this.points[q]);
+    }
+
+    return result;
+  }
+
+  direction(p1, p2, p3) {
+    return p5.Vector.cross(
+      p5.Vector.sub(p3, p1),
+      p5.Vector.sub(p2, p1)
+    ).z;
+  }
+}
+
+// https://stackoverflow.com/questions/16285134/calculating-polygon-area
+function calcPolygonArea(vertices) {
+    var total = 0;
+
+    for (var i = 0, l = vertices.length; i < l; i++) {
+      var addX = vertices[i].x;
+      var addY = vertices[i == vertices.length - 1 ? 0 : i + 1].y;
+      var subX = vertices[i == vertices.length - 1 ? 0 : i + 1].x;
+      var subY = vertices[i].y;
+
+      total += (addX * addY * 0.5);
+      total -= (subX * subY * 0.5);
+    }
+
+    return Math.abs(total);
+}
