@@ -88,7 +88,7 @@ function endLoading() {
 }
 
 function randomElement(arr) {
-  return arr[floor(random(Object.keys(arr).length-1))];
+  return arr[floor(random(Object.keys(arr).length))];
 }
 
 class Line {
