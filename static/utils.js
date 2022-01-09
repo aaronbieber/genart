@@ -91,6 +91,18 @@ function randomElement(arr) {
   return arr[floor(random(Object.keys(arr).length))];
 }
 
+function first(arr) {
+  return arr[0];
+}
+
+function last(arr) {
+  return arr[arr.length-1];
+}
+
+function vToString(v) {
+  return '(' + v.x + ', ' + v.y + ')';
+}
+
 class Line {
   constructor(p1, p2) {
     this.p1 = p1;
