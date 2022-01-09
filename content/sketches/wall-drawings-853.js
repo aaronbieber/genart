@@ -1,3 +1,16 @@
+var colors = [
+  '#A61B1E', // dark red
+  '#019950', // green
+  '#0171BB', // blue
+  '#EF2427', // bright red
+  '#5D3F97', // purple
+  '#FFD502', // yellow
+  '#F56813', // orange
+  '#8C5279', // purple
+];
+
+let colorIndex = -1;
+
 function setup() {
   var canvas = makeCanvas();
   background(0);
@@ -6,8 +19,23 @@ function setup() {
 
   squigglebox(
     createVector(20, 20),
-    createVector(width/2, -20),
-    width-40, height-40, HALF_PI-0.2);
+    createVector(width/4, -20),
+    (width-60)/2, (height-60)/2, HALF_PI);
+
+  squigglebox(
+    createVector(width/2+10, 20),
+    createVector(width/2, width/4),
+    (width-60)/2, (height-60)/2, 0);
+
+  squigglebox(
+    createVector(20, height/2+10),
+    createVector(20, height/2+10),
+    (width-60)/2, (height-60)/2, QUARTER_PI);
+
+  squigglebox(
+    createVector(width/2+10, height/2+10),
+    createVector(width/4*3, height/2),
+    (width-60)/2, (height-60)/2, HALF_PI);
 }
 
 var left, right;
@@ -29,6 +57,10 @@ function squigglebox(boxOrigin, squiggleOrigin, w, h, a) {
 
   // isolate only valid points
   squig = squig.filter(p => inbox(p));
+
+  // todo: adjust first and last points of squig to sit on the box line
+  // by rounding up or down the axis closest to any box line
+
   left = box.filter(p => isLeft(first(squig), last(squig), p));
   right = box.filter(p => !isLeft(first(squig), last(squig), p));
 
@@ -45,6 +77,9 @@ function squigglebox(boxOrigin, squiggleOrigin, w, h, a) {
 }
 
 function drawHalfBox(box, points, squig) {
+  noStroke();
+  fill(colors[++colorIndex % colors.length]);
+
   beginShape();
   // If there's a better way to do this I'd love to know it.
   let squigged = false;
@@ -74,19 +109,16 @@ function drawHalfBox(box, points, squig) {
 }
 
 function makeSquiggle(xOrigin, yOrigin, w, h, a) {
+  let amp = ((w+h)/2) * 0.2;
   let points = [];
-  // beginShape();
   let phase = random(w);
   let d = sqrt(pow(h, 2) + pow(w, 2));
   for (let x=0; x<d; x++) {
-    let y = (noise(x * 0.001) * 200) * sin((x+phase)/100);
+    let y = (noise(x * 0.002) * amp) * sin((x+phase)/60);
     let x1 = x * cos(a) - y * sin(a);
     let y1 = x * sin(a) + y * cos(a);
-
-    // vertex(x1+xOrigin, y1+yOrigin);
     points.push(createVector(x1+xOrigin, y1+yOrigin));
   }
-  // endShape();
   return points;
 }
 
