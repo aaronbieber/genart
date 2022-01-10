@@ -19,6 +19,8 @@
     <a href="{{ .Permalink }}">
       {{ if fileExists $image }}
         <img src="{{ .File.Dir }}{{ .Params.basename }}.png" />
+      {{ else }}
+        <img src="http://via.placeholder.com/200x200" />
       {{ end }}
       <span class="title">
         {{ .Title }}
