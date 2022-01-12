@@ -8,14 +8,20 @@ var colors = [
   '#F56813', // orange
   '#8C5279', // purple
 ];
-
-let colorIndex = -1;
+var colorIndex;
+var left, right;
 
 function setup() {
   var canvas = makeCanvas();
+  paint();
+}
+
+function paint() {
   background(0);
   stroke(255);
   noFill();
+
+  colorIndex = floor(random(colors.length));
 
   squigglebox(
     createVector(20, 20),
@@ -38,7 +44,10 @@ function setup() {
     (width-60)/2, (height-60)/2, HALF_PI);
 }
 
-var left, right;
+function mousePressed() {
+  paint();
+}
+
 function squigglebox(boxOrigin, squiggleOrigin, w, h, a) {
   let squig = makeSquiggle(squiggleOrigin.x, squiggleOrigin.y, w, h, a);
 
