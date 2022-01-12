@@ -1,6 +1,7 @@
 var palette, palettes;
 var polys;
 var bgColor, lineColor, shapeColor;
+var cutWidth = 8;
 
 function preload() {
   palettes = loadJSON(baseURL + '/1000.json');
@@ -8,9 +9,11 @@ function preload() {
 
 function setup() {
   var canvas = makeCanvas();
-  var cutWidth = 8;
-  palette = randomElement(palettes);
+  paint();
+}
 
+function paint() {
+  palette = randomElement(palettes);
   bgColor = palette[4];
   lineColor = palette[0];
   shapeColor = palette[1];
@@ -156,6 +159,10 @@ function setup() {
     drawPoly(polyTranslation);
     pop();
   }
+}
+
+function mousePressed() {
+  paint();
 }
 
 // https://stackoverflow.com/questions/1560492/how-to-tell-whether-a-point-is-to-the-right-or-left-side-of-a-line
