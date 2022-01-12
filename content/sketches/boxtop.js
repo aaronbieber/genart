@@ -1,10 +1,14 @@
 function setup() {
   var canvas = makeCanvas();
+  paint();
+}
+
+function paint() {
+  blendMode(BLEND);
   background(255);
   strokeWeight(2);
   strokeCap(SQUARE);
   blendMode(MULTIPLY);
-
   noStroke();
   fill(0);
 
@@ -22,6 +26,7 @@ function setup() {
   drawRegs(50, height-50);
   drawRegs(width-50, height-50);
 
+  push();
   translate(width/2, height/2);
 
   let points = [];
@@ -77,6 +82,11 @@ function setup() {
     );
   }
   endShape();
+  pop();
+}
+
+function mousePressed() {
+  paint();
 }
 
 function drawRegs(x, y) {
